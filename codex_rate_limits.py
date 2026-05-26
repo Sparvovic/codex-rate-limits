@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Read the latest Codex rate-limit snapshot from local session logs."""
 
 from __future__ import annotations

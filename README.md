@@ -33,6 +33,35 @@ python3 codex_rate_limits.py --timezone America/New_York
 
 By default, reset times use the local system timezone.
 
+## Agent Usage Example
+
+This script can be used as a lightweight budget signal for Codex or another
+agent. The script does not enforce any behavior by itself; it gives the agent
+current local rate-limit context that your prompt can turn into working rules.
+
+Example startup prompt:
+
+```text
+Before starting work, run:
+
+python3 codex_rate_limits.py --json
+
+Use the returned primary and secondary limits as your work budget.
+
+- Treat primary as the short 5-hour-style working window.
+- Treat secondary as the longer weekly-style working window.
+- If both limits have plenty remaining, work normally and use tools as needed.
+- If the weekly limit is low and reset is still far away, work more carefully:
+  prefer reading more before running expensive commands, batch tool calls, avoid
+  speculative exploration, and summarize tradeoffs before large changes.
+- Do not intentionally reduce either remaining budget below 15%.
+- If continuing would likely cross that 15% floor, stop and ask before doing
+  more work.
+```
+
+The exact windows should be read from `window_minutes` rather than assumed. For
+example, `300` means 5 hours and `10080` means 1 week.
+
 ## What It Shows
 
 The script reads the latest local snapshot and prints:
@@ -54,3 +83,7 @@ window size in future snapshots.
 - Local Codex session logs
 
 The script uses only the Python standard library.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
